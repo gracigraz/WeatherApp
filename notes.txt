@@ -1,0 +1,142 @@
+UI image view - this may be contained within a UI view 
+React - Javascript - brigde Native
+with react native we use JS in our components and when the app runs react native will then create the correct UI for the different IOS
+in order to create our UI react native has some core components which we can use: View, Text, Image, ScrollView TextInput
+we can wrap our layout inside of a view and inside of it we may want to display some text using Text core compoennt or a button 
+using button component.
+we can think of a view like a div
+import React from "react"
+import {View, Text} from 'react-native'
+your component is a constant function so it starts with const and any JSX must be returned and export default function components
+core components are the ones that we import  such as View and Text but we also refer to everything in the file as a component
+we use the term element to describe what we see on the screen but this is contained within what we call a component
+break down what we are building, the UI is separated into different pieces
+for styling
+js object instead of standard css
+font-size->fontSize
+<View style ={{}}></View>
+there are a few different ways to apply styles but we are going to start by using inline styles
+ <View style={{background:"pink"}}>
+when using inline styles the styles are applied as we create the component
+inline can get messy so we use stylesheets instead
+import stylesheets from the reactnative api
+if you are using flex=1 all the components up the tree must use flex =1 too which is why we also apply it to the outer safe area view
+density independant pixels
+react native is unitless
+react-native-vector-icons for icons
+flex direction by default is column?
+a component is a function that returns some JSX, JSX is the syntax that we use, we show or render something to the user
+under the hood JSX gets turned into JS by using babble
+we export the user to be able to use it in our application
+.js not needed if relative path
+react promotes comoponent reuse because it is a component-based framework: one root component, multiple other compoenents, root: App.js, others SRC folder
+helps with debugging and easier testing and DRY - don't repeat yourself
+Lists 
+3 core components that we have available
+    flatlist
+    sectionlist
+    virtualized Lists (diluted version of the 2 above)
+flatlist: if you have a list that you want to display the user (standard list), renderItem and data are req props
+sectionlist: when you need a list brocken into sections, each section has it's own items, renderItem and sections are required props, you must pass in an array of objects bc the list is broken up in sections
+
+looking at flat lists: const DATA =["Ford", "Toyota", "Fiat"] need to pass an array iwth the data we want to be display inside the screen, when using API data most likely also using an array containing obejcts too
+renderItem - list's own render function and this will get called on every array element, it's job it to then decide how this element gets displayed to the user.
+renderItem prop gets past a function and this will get call on every array element
+renderItem={({tem})=> <Item title={item.title} amount = {item.amount}/>} // do this if the item is very simple
+renderItem ={renderItem} //passing a reference to a function as we may want to render out quite a few things for our list element, we pass a single argument to the function which is an object and this is the item we are rendering
+in summary
+flatlist
+standard list, required props (data and renderItem), data must be an array, renderItem displays the list element to the user
+sectionlist
+when we need a list broken into sections, required propr (sections and renderItem), data must be an array of objects, renderIten displays the list element to the user
+when working with lists you need to provide a unique key to each element in the data the reason behind this is largely
+performanced based and it means that under the hood react native is able to keep track of each item in the list. this allows it to be updated not rebuilt everytime the ui rerenders and an item in the list has changed
+the key must be a string, each element must have its own unique id   
+the key can be added to the data or we can use the key extractor prop.
+in our data we can add keys to each item.
+if warning: missing key for items, make sure to specify a key property on each item or provide a custom keyExtractor
+itemSeparator another interesting prp to use, also listheader and lsitfooter
+flatlist only get rerender if the data changes and only renders the items currently displaying on the screen not everything at once
+have performance at the back of your mind
+
+images - 
+use url better than require('path ex')
+Network images must have a height set 
+when sizing images you can use a height and width or 
+you can use aspect ratio with the height and/or the width
+Be mindful of storage sizes when you are using static images
+be aware of the supported types png jpeg bmp gif psd
+colors reactnative: https://reactnative.dev/docs/colors
+
+props - (property)
+they are used to pass data from parent to child
+when you create an object in js you add properties to the object and give the properties a value
+properties that are given a value of some sort but they are used as way to pass our data down from the parent to a child
+we can use props to customise our components
+promotes component reusability
+core components in react native come with props whic can be used
+for e.g Text core component has disabled and ellipsizedMode
+FlatList renderItem and data
+
+folder structure
+have a folder for the screens and another one for the components
+screens are the screens the user will typically see e.g upcomingWeather is a screen, the components are buttons alerts or footers reusable things
+
+props let us pass in data from a parent ot a child in order to promote component reuse in react native
+props in core react native components and custom components
+imp: props are immutable this means they cannot be changed once the component is created - we pass the prop form the parent to the child, unidirectioinal 
+data flow, data is only able to move in one direction from the parent to the child - this makes our life much easier imagine cars driving in both 
+directions we'd have a collision quite easily, same would happen to our data, unidirectioinal data flow keeps things straightforward
+
+refactoring so that our code is easier to work with moving fwd - update imports
+
+core screens of the app are stored in the screens folder inside src
+
+when we start to see duplication in code - in react native we are able to 
+pass in multiple styles to the style prop by using array notation so if you are working on the web you might be using multiple class names but
+in react native we pass the array of the  styles to the style prop and these will get merged into one object
+if you have any duplciation in styles it is the last definition that it is used
+this is very useful if you have a theme that you want to use in multiple places
+but then we also have some additional unique styles to apply to
+e.g 
+ <Text style={[styles.countryName, styles.cityText]}>UK</Text>    
+ const styles = StyleSheet.create({
+    cityName:{
+        fontSize: 40,
+    },
+    countryName:{
+        fontSize: 30,
+    },
+    cityText:{
+        justifyContent: "center",
+        alignSelf: 'center',
+        fontWeight: 'bold',
+        color: 'white'
+    }
+})
+
+view is like container for flexbox div
+passing styles as a prop
+    const {iconName, iconColor, bodyText, bodyTextStyles} = props
+    return
+        <View>
+            <Feather name={iconName} size={50} color={iconColor} />
+            <Text style={[styles.textTheme, bodyTextStyles]}>{bodyText}</Text>
+        </View>
+
+Navigation
+anchor tags to link between different pages
+user clicks on a link or button to navigate to new page, that url is pushed on to a stack which is datastructure
+in this case it is called the browser history stack
+url gets popped of the stack if the user clicks to go back to the prior page
+we cannot use navigation in mobile app the same way we use it on web pages we need some way to navigate through screens
+ther's no built in navigation in react native so we use a library to add navigation to the app: the 2 most pop: react navigation and react native navigation, the set up is different but their goal is the same
+but react navigation is built into expo, if you want to use the other one you have to eject the app ffrom expo or create it withiut using expo
+we use a NAVIGATOR - consider how the navigation between the screens occurs sliding in from right to left or drodown from top to bottom
+how - using tabs is an option
+we are going to use react navigation and implement tab for the user to navigate between screens:
+npm install @react-navigation/native
+then bc using expo:
+npx expo install react-native-screens react-native-safe-area-context
+then set up navigation container - this will wrap the entire application, usually only do this once in the app in the root of the project (app.js)
+import { NavigationContainer } from '@react-navigation/native';
