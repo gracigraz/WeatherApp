@@ -140,3 +140,99 @@ then bc using expo:
 npx expo install react-native-screens react-native-safe-area-context
 then set up navigation container - this will wrap the entire application, usually only do this once in the app in the root of the project (app.js)
 import { NavigationContainer } from '@react-navigation/native';
+push and pop items off the stack
+2 ways:
+if we don't want the user to navigae to screen using a tab then we'll use the stack NAVIGATOR
+https://github.com/react-navigation/react-navigation for other examples in examples
+
+we want https://reactnavigation.org/docs/tab-based-navigation tabs can be shown on top or bottom of screen
+
+typically on Ios you have them at the bottom of screen vs at the top for Android
+if you want to display on top for androide and bottom for ios you would need to set up a material top tabs and then decide which to display based on the platform
+https://reactnavigation.org/docs/material-top-tab-navigator
+https://reactnative.dev/docs/platform and then you can use the OS property:  static OS: 'android' | 'ios';
+
+for this project:
+npm install @react-navigation/bottom-tabs
+
+set active and inactive tint colors on the navigator
+https://reactnavigation.org/docs/bottom-tab-navigator
+
+how to make our app more dynamic
+static - all our screens are connected but we only display data that we've hardcoded, for this we've only used props to pass data around from parent to child component
+
+dynamic - update and response to user input
+for this we use STATE
+
+State is an object that contains information about a component that we want to track
+in the object we use key value pairs to track data that we are going to track that over time is going to change
+be inside the room and keep track of something that is going to change in the room e.g messy state of a room true false or dark true or false, wet true or false
+the benefits of using state in an app is that things can be changed, added, removed, modified.
+we can update our data an retrigger ui  updated based on these changes. when the data of our component changes the componenet will re-render
+initial render- when the component first renders on the screen to the user
+if we use state and state changes the component rerenders
+irl this change in state might be more likely to occur based on a user event such as a button press or user inputs something in input field
+
+State is an object that contains information about a component that we want to track
+in the object we use key-value pairs
+helps us to add, remove and modif things in our component
+we can trigger UI updates based ont he changes
+when state changes the component rerenders
+
+props let us pass data between components
+help us to internally manage data within our components - can't modify state of a component outside of a component
+Redux is a library that helps us manage state
+
+  plugins: ["@typescript-eslint", "react", "prettier"],
+    extends: [
+    "eslint:recommended",
+    // "plugin:@typescript-eslint/recommended",
+
+
+//react does not render the component when the value of the variable changes
+if this happensa rerenders would be happening all over the place and would result in a v bad user experience
+hooks are functions we can use inside our function components
+useState setting up some piece of state for our componentto use useState we pass in an an initial or default starting value dor the piece of state
+const [isFlooded, setIsFloodeded] = useState(false)
+square brackets are using array destructuring
+first value is piece of state and the second is a function to update the state
+
+hooks
+stateless is use for components without state 
+created with a fucniton
+hooks are like special functions containing reusable logic
+every hook starts with the work use
+rules:
+you can only use hooks from inside of React functions
+hooks must be called at the top level of a component and before the return keyword is used
+
+useEffect hook
+lets you perform sideeffects in function components
+what is a side useEffect?
+when we use something not inside of react within our component
+stat fetching and using timers and updating the dom directly are examples of sideeffects
+component did mount happens when the component is mounted
+and component did update is called after updating occurs
+useEffect lets us replicate these lifecycle methods
+useEffect takes in a function as an argument, array as an optional second argument
+the cleanup function allows to turn off or clean up our side effects os if using the counter function you would need to use the clear intercal function to stop the counter
+that way we avoid memory leaks
+return ()=>{console.log("Clean up")}
+
+useEffect let us perform side effects within our function components
+we can pass in a dependency array which lets you specify what data when changed you would like to trigger a re-render
+we can additionally use a cleanup function to stop any of our side efffects before the component unmounts
+
+Activity indicator: https://reactnative.dev/docs/activityindicator
+
+expo location https://reactnative.directory/?search=geolocation
+npx expo install expo-location
+first ask permission to access their location 
+then we need to get their location once we have their location we need to store it
+we also need to handle their location with errors
+
+to store api key
+npm install -D react-native-dotenv
+create .env file
+
+to fetch data https://reactnative.dev/docs/network
